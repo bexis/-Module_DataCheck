@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\..\..\..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\..\..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -230,13 +230,13 @@
       <Project>{c8a05313-b960-406e-92ec-c1e5b3f47fcd}</Project>
       <Name>BExIS.IO.Transform.Validation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BEXIS.TEMPLATE.Entities\BEXIS.TEMPLATE.Entities.csproj">
+    <ProjectReference Include="..\BExIS.TEMPLATE.Entities\BExIS.TEMPLATE.Entities.csproj">
       <Project>{9472d367-8fb1-4009-b648-104b3d015ce9}</Project>
-      <Name>BEXIS.TEMPLATE.Entities</Name>
+      <Name>BExIS.TEMPLATE.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BEXIS.TEMPLATE.Services\BEXIS.TEMPLATE.Services.csproj">
+    <ProjectReference Include="..\BExIS.TEMPLATE.Services\BExIS.TEMPLATE.Services.csproj">
       <Project>{b423a986-eb03-4696-aade-a5e8ea11fc73}</Project>
-      <Name>BEXIS.TEMPLATE.Services</Name>
+      <Name>BExIS.TEMPLATE.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

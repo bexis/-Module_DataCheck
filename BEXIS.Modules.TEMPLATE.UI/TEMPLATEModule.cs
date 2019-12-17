@@ -1,4 +1,4 @@
-﻿using BExIS.Modules.TEMPLATE.UI.Helpers;
+using BExIS.Modules.TEMPLATE.UI.Helpers;
 using System;
 using Vaiona.Logging;
 using Vaiona.Web.Mvc.Modularity;

@@ -1,4 +1,4 @@
-﻿using BEXIS.TEMPLATE.Entities.Data;
+using BExIS.TEMPLATE.Entities.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
