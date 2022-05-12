@@ -11,12 +11,24 @@ namespace BExIS.Modules.DPT_BE.UI.Model
 
         public PlotProfiling PlotProfiling { get; set; }
 
+        public PlotModel()
+        {
+            PlotIds = new List<string>();
+            PlotProfiling = new PlotProfiling();
+        }
+
     }
 
     public class PlotProfiling
     {
-        List<PlotTypeCounter> plotTypeCounters { get; set; }
-        List<NewExperimentType> newExperimentTypes { get; set; }
+        public List<PlotTypeCounter> PlotTypeCounters { get; set; }
+        public  List<NewExperimentType> NewExperimentTypes { get; set; }
+
+        public PlotProfiling()
+        {
+            PlotTypeCounters = new List<PlotTypeCounter>();
+            NewExperimentTypes = new List<NewExperimentType>();
+        }
     }
 
 
@@ -24,6 +36,11 @@ namespace BExIS.Modules.DPT_BE.UI.Model
     {
         public PlotType PlotType { get; set; }
         public int Number{ get; set; }
+
+        public PlotTypeCounter(PlotType plotType)
+        {
+            PlotType = plotType;
+        }
 
     }
   
