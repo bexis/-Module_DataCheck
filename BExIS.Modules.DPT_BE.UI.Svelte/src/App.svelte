@@ -3,47 +3,75 @@
 	//let container = document.getElementById("plotids");
 	//let plotids = container.getAttribute("plots");
 
+	import {countPlots} from './services/Caller';
+	import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
+	import { onMount,  } from 'svelte';
+
+
+
 	let files;
 	let plotsid = [];
+	let json;
 
-	let textareaPlots = "Insert plots commy seperated.";
+	onMount(async () => {
+  		console.log("start edit");
+  		setApiConfig("https://localhost:44345","epetzold","2021.B2.Go$On");
+	})
+
+	let textareaPlots = "";
 
 	const handleSubmit = () => {
-		let reader = readFile(csvFile);
-		let plots= csvToArray(reader, ",");
+
+		readFile(files[0]);
+
+	}
+
+	async function count()
+	{
+		//send to bexis textareaPlots
+		console.log("textareaPlots", textareaPlots);
+		plotsid = textareaPlots.split('\r\n');
+		const respone = await countPlots(plotsid);
+		console.log(respone);
+
 	}
 
 	function readFile(file)
 	{
 		const reader = new FileReader();
 		const input = file;
+		let json;
+
+		reader.readAsText(input);
 
 		reader.onload = function (e) {
+		//debugger;	
         const text = e.target.result;
-		const data = csvToArray(text);
-		textareaPlots = JSON.stringify(data);
+		console.log("text",text);
+		textareaPlots = text;
+        // const data = csvToArray(text);
+		// JSON.stringify(data);
 
-        document.write(JSON.stringify(data));
+      };
 
-      	};
-
-		return reader.readAsText(input);
 	}
 
-	function csvToArray(str, delimiter = ",") 
-	{
-		let plots = str.slice(str.indexOf("\n") + 1).split("\n");
-		let array = rows.map(function (row) {
-    	let values = row.split(delimiter);
-    	let el = headers.reduce(function (object, header, index) {
-      		object[header] = values[index];
-      		return object;
-    	}, {});
-    		return el;
-		});
+	// function csvToArray(str, delimiter = ",") 
+	// {
+	// 	const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
 
-		return array;
-	}
+	// 	let rows = str.slice(str.indexOf("\n") + 1).split("\n");
+	// 	let array = rows.map(function (row) {
+    // 	let values = row.split(delimiter);
+    // 	let el = headers.reduce(function (object, header, index) {
+    //   		object[header] = values[index];
+    //   		return object;
+    // 	}, {});
+    // 		return el;
+	// 	});
+
+	// 	return array;
+	// }
 
 </script>
 
@@ -53,19 +81,18 @@
 	<form on:submit|preventDefault={handleSubmit}>
 
 		<div class="box"><input type="file" bind:files><br>
+
 		<input type="submit" value="Submit" /></div>
 	
 	</form>
-
 	<div class="box"><textarea value={textareaPlots}></textarea></div>
-
+	<br>
+	<button on:click={count}>
+		Count
+	</button>
 	
 
-{#if files && files[0]}
-	<p>
-		{files[0].name}
-	</p>
-{/if}
+
 </main>
 
 <style>
@@ -76,12 +103,12 @@
 		margin: 0 auto;
 	}
 
-	h1 {
+	/* h1 {
 		color: #ff3e00;
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
-	}
+	} */
 	textarea { 
 		width: 100px; height: 200px; 
 	}
