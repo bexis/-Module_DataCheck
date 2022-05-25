@@ -34,23 +34,23 @@ namespace BExIS.Modules.DPT_BE.UI.Model
 
     public class PlotTypeCounter
     {
-        public PlotType PlotType { get; set; }
+        public string PlotType { get; set; }
         public int Number{ get; set; }
 
-        public PlotTypeCounter(PlotType plotType)
+        public PlotTypeCounter(String plotType)
         {
             PlotType = plotType;
         }
 
     }
   
-    public enum PlotType
-    {
-        GP,
-        Ep,
-        Mip,
-        Vip
-    }
+    //public enum PlotType
+    //{
+    //    GP,
+    //    Ep,
+    //    Mip,
+    //    Vip
+    //}
 
     public enum NewExperimentType
     {

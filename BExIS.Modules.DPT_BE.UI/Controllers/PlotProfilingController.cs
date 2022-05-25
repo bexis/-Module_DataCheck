@@ -20,8 +20,9 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return View();
         }
 
-        public ActionResult CountPlots(string[] plots)
+        public JsonResult CountPlots(string[] plots)
         {
+            //string[] plotsArray = plots.Split(',').ToArray();
             //get gp ref dataset 
             string gpRefDatasetId = Models.Settings.get("gpRefDataset").ToString();
             var datasetObjectGp = DataAccess.GetDatasetInfo(gpRefDatasetId, GetServerInformation());
@@ -34,10 +35,10 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
             PlotModel model = new PlotModel();
 
-            PlotTypeCounter gps = new PlotTypeCounter(PlotType.GP);
-            PlotTypeCounter eps = new PlotTypeCounter(PlotType.Ep);
-            PlotTypeCounter vips = new PlotTypeCounter(PlotType.Vip);
-            PlotTypeCounter mips = new PlotTypeCounter(PlotType.Mip);
+            PlotTypeCounter gps = new PlotTypeCounter("GP");
+            PlotTypeCounter eps = new PlotTypeCounter("EP");
+            PlotTypeCounter vips = new PlotTypeCounter("VIP");
+            PlotTypeCounter mips = new PlotTypeCounter("MIP");
 
             Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
             Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
@@ -74,6 +75,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                     DataRow row = epPlotRefTable.AsEnumerable().Where(a => a.Field<string>("EP_PlotID") == plot).FirstOrDefault();
                     if (row != null)
                     {
+                        gps.Number++;
                         eps.Number++;
 
                         if (row.Field<string>("VIP") == "yes")
@@ -92,7 +94,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             model.PlotProfiling.PlotTypeCounters.Add(mips);
             model.PlotProfiling.PlotTypeCounters.Add(vips);
 
-            return View("", model);
+            return Json(model);
         }
 
 
@@ -104,8 +106,10 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
         {
             ServerInformation serverInformation = new ServerInformation();
             var uri = System.Web.HttpContext.Current.Request.Url;
-            serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
-            serverInformation.Token = GetUserToken();
+            serverInformation.ServerName = "http://be2020-dev.inf-bb.uni-jena.de:2010/";
+            serverInformation.Token = "k4ywfsj6X32sXE62XybjtvJk5fs2JqNXyBmzkR7apBMgigwz9hiW3mFyR6uW7qy5";
+            //serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
+            //serverInformation.Token = GetUserToken();
 
             return serverInformation;
         }

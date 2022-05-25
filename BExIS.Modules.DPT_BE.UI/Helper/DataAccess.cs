@@ -103,7 +103,7 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         var objText = reader.ReadToEnd();
-                        dataStructureObject = (DataStructureObject)Newtonsoft.Json.JsonConvert.DeserializeObject(objText);
+                        dataStructureObject = Newtonsoft.Json.JsonConvert.DeserializeObject<DataStructureObject>(objText);
                     }
                 }
             }
@@ -136,7 +136,7 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
                     using (StreamReader reader = new StreamReader(response.GetResponseStream()))
                     {
                         var objText = reader.ReadToEnd();
-                        datasetObject = (DatasetObject)Newtonsoft.Json.JsonConvert.DeserializeObject(objText);
+                        datasetObject = Newtonsoft.Json.JsonConvert.DeserializeObject<DatasetObject>(objText);
                     }
                 }
             }
