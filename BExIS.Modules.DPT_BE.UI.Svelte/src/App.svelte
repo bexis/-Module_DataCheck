@@ -7,11 +7,9 @@
 	import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
 	import { onMount,  } from 'svelte';
 
-
-
 	let files;
 	let plotsid = [];
-	let json;
+	let result;
 
 	onMount(async () => {
   		console.log("start edit");
@@ -32,6 +30,7 @@
 		console.log("textareaPlots", textareaPlots);
 		plotsid = textareaPlots.split('\r\n');
 		const respone = await countPlots(plotsid);
+		result = respone;
 		console.log(respone);
 
 	}
@@ -77,7 +76,10 @@
 
 
 <main>
+	<div class="boxLeft">
 	Upload file or enter plot ids to the textfield<br><br>
+	File Header: <input type="checkbox">
+
 	<form on:submit|preventDefault={handleSubmit}>
 
 		<div class="box"><input type="file" bind:files><br>
@@ -85,13 +87,43 @@
 		<input type="submit" value="Submit" /></div>
 	
 	</form>
-	<div class="box"><textarea value={textareaPlots}></textarea></div>
-	<br>
+	</div>
+	<div class="boxLeft"><textarea value={textareaPlots}></textarea>
+		<br>
 	<button on:click={count}>
 		Count
 	</button>
+	</div>
+
 	
 
+
+	<div class="box" id="results">
+	
+	{#if result}
+	<ul>
+		<li><b>#Plots</b></li>
+	{#each result.PlotProfiling.PlotTypeCounters as item, i}
+	
+		<p class="resultList">{item.PlotType}: {item.Number}</p>
+
+	{/each}
+
+	<li><b>#Not vaild plots:</b></li>
+	<p class="resultList">
+	{#each result.NotVaildPlotIds as item, i}
+	
+	{item}<br>
+
+	{/each}
+	</p>
+	</ul>
+	{:else}
+		<b>...loading</b>
+	{/if}
+
+	</div>
+	
 
 </main>
 
@@ -103,20 +135,25 @@
 		margin: 0 auto;
 	}
 
-	/* h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	} */
 	textarea { 
 		width: 100px; height: 200px; 
 	}
 
-	.box {
+	.boxLeft {
      float: left;
      padding: 20px;
-     background: #eee;
+     background: #FFF;
+	 width: 30%;
+}
+
+.box{
+	width: 30%;
+	
+}
+
+.resultList
+{
+	margin-left: 100px;
 }
 
 	@media (min-width: 640px) {
