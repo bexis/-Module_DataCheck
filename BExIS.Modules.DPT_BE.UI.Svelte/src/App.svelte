@@ -13,7 +13,7 @@
 
 	onMount(async () => {
   		console.log("start edit");
-  		setApiConfig("https://localhost:44345","epetzold","2021.B2.Go$On");
+  		
 	})
 
 	let textareaPlots = "";
@@ -78,7 +78,7 @@
 <main>
 	<div class="boxLeft">
 	Upload file or enter plot ids to the textfield<br><br>
-	File Header: <input type="checkbox">
+	File Header: <input type="checkbox"/>
 
 	<form on:submit|preventDefault={handleSubmit}>
 
