@@ -1,8 +1,4 @@
 <script>
-	
-	//let container = document.getElementById("plotids");
-	//let plotids = container.getAttribute("plots");
-
 	import {countPlots} from './services/Caller';
 	import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
 	import { onMount,  } from 'svelte';
@@ -10,13 +6,15 @@
 	let files;
 	let plotsid = [];
 	let result;
+	let fileUpload = false;
+	let header = false;
 
 	onMount(async () => {
   		console.log("start edit");
-  		
+  		//setApiConfig("https://localhost:44345","","");
 	})
 
-	let textareaPlots = "";
+	let textareaPlots ="";
 
 	const handleSubmit = () => {
 
@@ -28,8 +26,8 @@
 	{
 		//send to bexis textareaPlots
 		console.log("textareaPlots", textareaPlots);
-		plotsid = textareaPlots.split('\r\n');
-		const respone = await countPlots(plotsid);
+		plotsid = textareaPlots.split(/[\r\n,\t]+/);
+		const respone = await countPlots(plotsid, header);
 		result = respone;
 		console.log(respone);
 
@@ -47,69 +45,54 @@
 		//debugger;	
         const text = e.target.result;
 		console.log("text",text);
-		textareaPlots = text;
-        // const data = csvToArray(text);
-		// JSON.stringify(data);
+		textareaPlots = text
 
       };
 
 	}
-
-	// function csvToArray(str, delimiter = ",") 
-	// {
-	// 	const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
-
-	// 	let rows = str.slice(str.indexOf("\n") + 1).split("\n");
-	// 	let array = rows.map(function (row) {
-    // 	let values = row.split(delimiter);
-    // 	let el = headers.reduce(function (object, header, index) {
-    //   		object[header] = values[index];
-    //   		return object;
-    // 	}, {});
-    // 		return el;
-	// 	});
-
-	// 	return array;
-	// }
-
 </script>
 
 
 <main>
-	<div class="boxLeft">
-	Upload file or enter plot ids to the textfield<br><br>
-	File Header: <input type="checkbox"/>
 
-	<form on:submit|preventDefault={handleSubmit}>
+	<div class="boxOuter">
 
-		<div class="box"><input type="file" bind:files><br>
+	<p class="dtm-para_green">Enter plot ids in the text field or upload file.
+	</p>
 
-		<input type="submit" value="Submit" /></div>
-	
-	</form>
+	<div class="boxLeft"><b>Plots:</b><br><textarea  bind:value={textareaPlots}></textarea><br>
+
+	<input type="checkbox" bind:checked={fileUpload}/> <b>Upload plots via file</b>
 	</div>
-	<div class="boxLeft"><textarea value={textareaPlots}></textarea>
-		<br>
-	<button on:click={count}>
+	{#if fileUpload == true}
+	<div class="boxLeft">
+		File header: <input type="checkbox" bind:checked={header}/>
+		<form on:submit|preventDefault={handleSubmit}>
+			<input type="file" bind:files><br>
+			<input type="submit" value="Submit" />	
+		</form>
+		</div>	{/if}
+	
+	<hr class="dtm-para_green"/>
+	<button class="bx-button small function" on:click={count}>
 		Count
 	</button>
 	</div>
 
-	
-
-
-	<div class="box" id="results">
-	
 	{#if result}
+
+	<div class="boxOuter" id="results">
+	
+	<p class="dtm-para_green">Result</p>
 	<ul>
-		<li><b>#Plots</b></li>
+		<li><b>Number Of Plots</b></li>
 	{#each result.PlotProfiling.PlotTypeCounters as item, i}
 	
-		<p class="resultList">{item.PlotType}: {item.Number}</p>
+		<p class="resultList"><b>Number of {item.PlotType}:</b> {item.Number}</p>
 
 	{/each}
-
-	<li><b>#Not vaild plots:</b></li>
+	<li><b>Joint Experiment 2020</b></li>
+	<li><b>Non valid plots</b></li>
 	<p class="resultList">
 	{#each result.NotVaildPlotIds as item, i}
 	
@@ -118,11 +101,10 @@
 	{/each}
 	</p>
 	</ul>
-	{:else}
-		<b>...loading</b>
+	</div>
 	{/if}
 
-	</div>
+	
 	
 
 </main>
@@ -136,19 +118,35 @@
 	}
 
 	textarea { 
-		width: 100px; height: 200px; 
+		width: 150px; height: 200px; 
 	}
 
-	.boxLeft {
-     float: left;
+	.boxLeft{
+	 
      padding: 20px;
      background: #FFF;
+	 width: 40%;
+	}
+
+	.boxOuter {
+     float: left;
 	 width: 30%;
+	 border-left: #388670 6px solid;
+	 border-right: #388670 2px solid;
+     border-bottom: #388670 2px solid;
+     border-top: #388670 10px solid;
+     margin-bottom: 1em;
+	 margin-right: 1em;
 }
 
-.box{
-	width: 30%;
-	
+
+
+.dtm-para_green {
+    background-color: #bbddd9;
+    font-size: 14px;
+    padding: 0.5em;
+	margin-block-start: 0;
+	border: 0;
 }
 
 .resultList
