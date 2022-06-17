@@ -41,12 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mappings\Default\Data\Example.hbm.xml">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Mappings\DB2Dialect\" />
+    <Folder Include="Mappings\Default\Data\" />
     <Folder Include="Mappings\MsSql2008Dialect\" />
     <Folder Include="Mappings\PostgresSQL82Dialect\" />
   </ItemGroup>

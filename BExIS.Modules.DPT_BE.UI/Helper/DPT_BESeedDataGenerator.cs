@@ -17,8 +17,8 @@ namespace BExIS.Modules.DPT_BE.UI.Helpers
                 Feature rootDataToolsFeature = featureManager.FeatureRepository.Get().FirstOrDefault(f => f.Name.Equals("Data Tools"));
                 if (rootDataToolsFeature == null) rootDataToolsFeature = featureManager.Create("Data Tools", "Data Tools");
 
-                Feature plotProfilingFeature = featureManager.FeatureRepository.Get().FirstOrDefault(f => f.Name.Equals("Former Member Management"));
-                if (plotProfilingFeature == null) plotProfilingFeature = featureManager.Create("Former Member Management", "Former Member Management", rootDataToolsFeature);
+                Feature plotProfilingFeature = featureManager.FeatureRepository.Get().FirstOrDefault(f => f.Name.Equals("Plot Profiling"));
+                if (plotProfilingFeature == null) plotProfilingFeature = featureManager.Create("Plot Profiling", "Plot Profiling", rootDataToolsFeature);
 
                 operationManager.Create("DPT_BE", "PlotProfiling", "*", plotProfilingFeature);
 

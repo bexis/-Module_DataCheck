@@ -18,12 +18,13 @@
 						controller="ManageMetadataStructure" action="Index" argument=""
 						extends="./settingsRoot"
 						/>-->
-	<!-- Menubar Example-->
-		<!--<Export tag="menubar" id="createDataset" order="1"
-						title="Create Dataset" description="Create new Dataset" icon=""
-						controller="CreateDataset" action="index"
-						extends="./menubarRoot/collect" />-->
-			
+	<!-- Menubar -->
+		
+		<Export tag="menubar" id="luiMenu" order="1"
+		   title="Plot Profiling Tool" description="PlotProfiling" icon=""
+		   controller="PlotProfiling" action="index"
+		   extends="./menubarRoot/dataTools" />
+		
 		<!-- Api Example-->
 		<!-- <Export tag="api" id="tntList"
 						title="No thing" description="Change me!" icon=""

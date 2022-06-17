@@ -47,12 +47,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExampleManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BExIS.DPT_BE.Entities\BExIS.DPT_BE.Entities.csproj">
+    <ProjectReference Include="..\..\SWS\BEXIS.SWS.Entities\BEXIS.SWS.Entities.csproj">
       <Project>{9472D367-8FB1-4009-B648-104B3D015CE9}</Project>
-      <Name>BExIS.DPT_BE.Entities</Name>
+      <Name>BEXIS.SWS.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

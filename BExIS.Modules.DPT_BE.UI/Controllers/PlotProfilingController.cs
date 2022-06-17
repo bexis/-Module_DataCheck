@@ -20,9 +20,11 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return View();
         }
 
-        public JsonResult CountPlots(string[] plots)
+        public JsonResult CountPlots(string[] plots, bool header)
         {
-            //string[] plotsArray = plots.Split(',').ToArray();
+            if(header)
+                plots = plots.Skip(1).ToArray();
+
             //get gp ref dataset 
             string gpRefDatasetId = Models.Settings.get("gpRefDataset").ToString();
             var datasetObjectGp = DataAccess.GetDatasetInfo(gpRefDatasetId, GetServerInformation());
@@ -42,8 +44,6 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
             Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
             Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
-
-            List<string> errors = new List<string>();
 
             foreach (var plot in plots)
             {
@@ -68,7 +68,9 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                                     mips.Number++;
                             }
                         }
-                    } 
+                    }
+                    else
+                        model.NotVaildPlotIds.Add(plot);
                 }
                 else if (epRegex.IsMatch(plot))
                 {
@@ -84,9 +86,11 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                         if (row.Field<string>("MIP") == "yes")
                             mips.Number++;
                     }
+                    else
+                        model.NotVaildPlotIds.Add(plot);
                 }
                 else
-                    errors.Add("Not a vaild plot: " + plot);
+                    model.NotVaildPlotIds.Add(plot);
 
             }
             model.PlotProfiling.PlotTypeCounters.Add(gps);
@@ -106,7 +110,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
         {
             ServerInformation serverInformation = new ServerInformation();
             var uri = System.Web.HttpContext.Current.Request.Url;
-            serverInformation.ServerName = "http://be2020-dev.inf-bb.uni-jena.de:2010/";
+            serverInformation.ServerName = "https://localhost:44345/";
             serverInformation.Token = "k4ywfsj6X32sXE62XybjtvJk5fs2JqNXyBmzkR7apBMgigwz9hiW3mFyR6uW7qy5";
             //serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
             //serverInformation.Token = GetUserToken();

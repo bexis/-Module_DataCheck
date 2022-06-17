@@ -249,13 +249,13 @@
       <Project>{c8a05313-b960-406e-92ec-c1e5b3f47fcd}</Project>
       <Name>BExIS.IO.Transform.Validation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BExIS.DPT_BE.Entities\BExIS.DPT_BE.Entities.csproj">
+    <ProjectReference Include="..\..\SWS\BEXIS.SWS.Entities\BEXIS.SWS.Entities.csproj">
       <Project>{9472d367-8fb1-4009-b648-104b3d015ce9}</Project>
-      <Name>BExIS.DPT_BE.Entities</Name>
+      <Name>BEXIS.SWS.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BExIS.DPT_BE.Services\BExIS.DPT_BE.Services.csproj">
+    <ProjectReference Include="..\..\SWS\BEXIS.SWS.Services\BEXIS.SWS.Services.csproj">
       <Project>{b423a986-eb03-4696-aade-a5e8ea11fc73}</Project>
-      <Name>BExIS.DPT_BE.Services</Name>
+      <Name>BEXIS.SWS.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
