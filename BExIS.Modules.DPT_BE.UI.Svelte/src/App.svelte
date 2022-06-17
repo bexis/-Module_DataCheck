@@ -11,7 +11,7 @@
 
 	onMount(async () => {
   		console.log("start edit");
-  		//setApiConfig("https://localhost:44345","","");
+  		setApiConfig("https://localhost:44345","","");
 	})
 
 	let textareaPlots ="";
@@ -25,12 +25,14 @@
 	async function count()
 	{
 		//send to bexis textareaPlots
-		console.log("textareaPlots", textareaPlots);
 		plotsid = textareaPlots.split(/[\r\n,\t]+/);
 		const respone = await countPlots(plotsid, header);
 		result = respone;
-		console.log(respone);
+	}
 
+	function clearTextbox()
+	{
+		textareaPlots = "";
 	}
 
 	function readFile(file)
@@ -61,12 +63,15 @@
 	</p>
 
 	<div class="boxLeft"><b>Plots:</b><br><textarea  bind:value={textareaPlots}></textarea><br>
+		<button class="bx-button small function" on:click={clearTextbox}>
+			Clear textbox
+		</button><br>
 
 	<input type="checkbox" bind:checked={fileUpload}/> <b>Upload plots via file</b>
 	</div>
 	{#if fileUpload == true}
 	<div class="boxLeft">
-		File header: <input type="checkbox" bind:checked={header}/>
+		<input type="checkbox" bind:checked={header}/> File header
 		<form on:submit|preventDefault={handleSubmit}>
 			<input type="file" bind:files><br>
 			<input type="submit" value="Submit" />	
@@ -77,6 +82,7 @@
 	<button class="bx-button small function" on:click={count}>
 		Count
 	</button>
+	<p class="errors"></p>
 	</div>
 
 	{#if result}
@@ -92,14 +98,19 @@
 
 	{/each}
 	<li><b>Joint Experiment 2020</b></li>
-	<li><b>Non valid plots</b></li>
-	<p class="resultList">
-	{#each result.NotVaildPlotIds as item, i}
 	
-	{item}<br>
+	{#if result.NotVaildPlotIds.length > 0}
 
-	{/each}
-	</p>
+		<li><b>Non valid plots</b></li>
+		<p class="resultList" style="overflow-y: scroll; height:100px;">
+		{#each result.NotVaildPlotIds as item, i}
+	
+		{item}<br>
+
+		{/each}
+		</p>
+	
+	{/if}
 	</ul>
 	</div>
 	{/if}
@@ -152,6 +163,7 @@
 .resultList
 {
 	margin-left: 100px;
+	margin-right: 100px;
 }
 
 	@media (min-width: 640px) {
