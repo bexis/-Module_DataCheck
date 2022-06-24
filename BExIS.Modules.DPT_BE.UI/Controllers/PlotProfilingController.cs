@@ -25,6 +25,8 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             if(header)
                 plots = plots.Skip(1).ToArray();
 
+            plots = plots.Distinct().ToArray();
+
             //get gp ref dataset 
             string gpRefDatasetId = Models.Settings.get("gpRefDataset").ToString();
             var datasetObjectGp = DataAccess.GetDatasetInfo(gpRefDatasetId, GetServerInformation());
