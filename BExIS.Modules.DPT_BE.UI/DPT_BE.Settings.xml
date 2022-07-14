@@ -6,4 +6,6 @@
 
  <entry key="epRefDataset" value="20826" type="int"/>
  <entry key="gpRefDataset" value="20907" type="int"/>
+ <entry key="foxRefDataset" value="31265" type="int"/>
+ <entry key="gNewExpDataset" value="31264" type="int"/>
 </settings>

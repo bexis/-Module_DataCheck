@@ -25,12 +25,15 @@ namespace BExIS.Modules.DPT_BE.UI.Model
     public class PlotProfiling
     {
         public List<PlotTypeCounter> PlotTypeCounters { get; set; }
-        public  List<NewExperimentType> NewExperimentTypes { get; set; }
+        public  bool JointExperimentForest { get; set; }
+        public bool JointExperimentGrld { get; set; }
+
 
         public PlotProfiling()
         {
             PlotTypeCounters = new List<PlotTypeCounter>();
-            NewExperimentTypes = new List<NewExperimentType>();
+            JointExperimentForest = false;
+            JointExperimentGrld = false;
         }
     }
 
@@ -47,21 +50,4 @@ namespace BExIS.Modules.DPT_BE.UI.Model
 
     }
   
-    //public enum PlotType
-    //{
-    //    GP,
-    //    Ep,
-    //    Mip,
-    //    Vip
-    //}
-
-    public enum NewExperimentType
-    {
-        REX1,
-        REX2,
-        LUX,
-        FOX,
-        None
-    }
-
 }

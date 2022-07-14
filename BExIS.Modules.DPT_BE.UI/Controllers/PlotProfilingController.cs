@@ -20,12 +20,15 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return View();
         }
 
-        public JsonResult CountPlots(string[] plots, bool header)
+        public JsonResult CountPlots(string[] plots, bool header = false)
         {
             if(header)
                 plots = plots.Skip(1).ToArray();
 
             plots = plots.Distinct().ToArray();
+
+            //list for non new exp plots
+            List<string> plotList = plots.ToList();
 
             //get gp ref dataset 
             string gpRefDatasetId = Models.Settings.get("gpRefDataset").ToString();
@@ -37,6 +40,21 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             var datasetObject = DataAccess.GetDatasetInfo(epRefDatasetId, GetServerInformation());
             DataTable epPlotRefTable = DataAccess.GetData(epRefDatasetId, long.Parse(datasetObject.DataStructureId), GetServerInformation());
 
+            //get new experiment plots datasets
+            string foxRefDatasetId = Models.Settings.get("foxRefDataset").ToString();
+            var datasetObjectFox = DataAccess.GetDatasetInfo(foxRefDatasetId, GetServerInformation());
+            DataTable foxPlotRefTable = DataAccess.GetData(foxRefDatasetId, long.Parse(datasetObjectFox.DataStructureId), GetServerInformation());
+
+            string gNewExpRefDatasetId = Models.Settings.get("gNewExpDataset").ToString();
+            var datasetObjectgNewExp = DataAccess.GetDatasetInfo(gNewExpRefDatasetId, GetServerInformation());
+            DataTable gNewExpPlotRefTable = DataAccess.GetData(gNewExpRefDatasetId, long.Parse(datasetObjectgNewExp.DataStructureId), GetServerInformation());
+
+            //
+
+            //create lists with new experiment plot ids
+            List<string> foxPlots = foxPlotRefTable.AsEnumerable().Select(a => a.Field<string>("Joint Experiment ID")).ToList();
+            List<string> glnewExpPlots = gNewExpPlotRefTable.AsEnumerable().Select(a => a.Field<string>("Joint Experiment ID")).ToList();
+
             PlotModel model = new PlotModel();
 
             PlotTypeCounter gps = new PlotTypeCounter("GP");
@@ -47,7 +65,44 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
             Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
 
+            //check first if new exp plots are there and ad info to the model
             foreach (var plot in plots)
+            {
+                if (foxPlots.Contains(plot))
+                {
+                    DataRow row = foxPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Joint Experiment ID") == plot).FirstOrDefault();
+                    if(row != null)
+                    {
+                        model.PlotProfiling.JointExperimentForest = true;
+
+                        //remove new exp plot from list
+                        plotList.Remove(plot);
+
+                        //if ep id is not in the plotlist add to count it later to Ep level
+                        string ep = row.Field<string>("EP ID");
+                        if(!plots.Contains(ep) && !plotList.Contains(ep))
+                            plotList.Add(ep);
+                    }
+
+                }
+                else if(glnewExpPlots.Contains(plot))
+                {
+                    DataRow row = gNewExpPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Joint Experiment ID") == plot).FirstOrDefault();
+                    if (row != null)
+                    {
+                        model.PlotProfiling.JointExperimentGrld = true;
+
+                        //remove new exp plot from list
+                        plotList.Remove(plot);
+
+                        string ep = row.Field<string>("EP ID");
+                        if (!plots.Contains(ep) && !plotList.Contains(ep))
+                            plotList.Add(ep);
+                    }
+                }
+            }
+
+            foreach (var plot in plotList)
             {
                 if (gpRegex.IsMatch(plot))
                 {
@@ -91,6 +146,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                     else
                         model.NotVaildPlotIds.Add(plot);
                 }
+               
                 else
                     model.NotVaildPlotIds.Add(plot);
 
@@ -112,9 +168,9 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
         {
             ServerInformation serverInformation = new ServerInformation();
             var uri = System.Web.HttpContext.Current.Request.Url;
-            serverInformation.ServerName = "https://localhost:44345/";
+            //serverInformation.ServerName = "http://be2020-dev.inf-bb.uni-jena.de:2010/";
             serverInformation.Token = "k4ywfsj6X32sXE62XybjtvJk5fs2JqNXyBmzkR7apBMgigwz9hiW3mFyR6uW7qy5";
-            //serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
+            serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
             //serverInformation.Token = GetUserToken();
 
             return serverInformation;

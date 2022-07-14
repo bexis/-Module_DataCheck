@@ -11,7 +11,7 @@
 
 	onMount(async () => {
   		console.log("start edit");
-  		setApiConfig("https://localhost:44345","","");
+  		//setApiConfig("https://localhost:44345","","");
 	})
 
 	let textareaPlots ="";
@@ -26,7 +26,9 @@
 	{
 		//send to bexis textareaPlots
 		plotsid = textareaPlots.split(/[\r\n,\t]+/);
+		console.log(plotsid);
 		const respone = await countPlots(plotsid, header);
+		console.log(respone);
 		result = respone;
 	}
 
@@ -97,7 +99,21 @@
 		<p class="resultList"><b>Number of {item.PlotType}:</b> {item.Number}</p>
 
 	{/each}
-	<li><b>Joint Experiment 2020</b></li>
+	<li><b>Joint Experiment 2020</b>
+		<p class="resultList"><b>JointExperimentForest: {#if result.PlotProfiling.JointExperimentForest == true}
+			 yes
+		{:else}
+			 no
+		{/if}
+			
+		</b></p>
+		<p class="resultList"><b>JointExperimentGrld: {#if result.PlotProfiling.JointExperimentGrld == true}
+			 yes
+		{:else}
+			 no
+		{/if}
+		</b></p>
+	</li>
 	
 	{#if result.NotVaildPlotIds.length > 0}
 
