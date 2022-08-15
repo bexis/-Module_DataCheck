@@ -32,9 +32,11 @@
 		result = respone;
 	}
 
-	function clearTextbox()
+	function clear()
 	{
 		textareaPlots = "";
+		result ="";
+
 	}
 
 	function readFile(file)
@@ -83,7 +85,7 @@
 	<button class="bx-button small function" on:click={count}>
 		Count
 	</button>
-	<button class="bx-button small function" on:click={clearTextbox}>
+	<button class="bx-button small function" on:click={clear}>
 		Clear textbox
 	</button><br>
 	<p class="errors"></p>
