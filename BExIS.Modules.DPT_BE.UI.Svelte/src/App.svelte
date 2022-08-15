@@ -65,11 +65,10 @@
 	</p>
 
 	<div class="boxLeft"><b>Plots:</b><br><textarea  bind:value={textareaPlots}></textarea><br>
-		<button class="bx-button small function" on:click={clearTextbox}>
-			Clear textbox
-		</button><br>
+		
 
 	<input type="checkbox" bind:checked={fileUpload}/> <b>Upload plots via file</b>
+	
 	</div>
 	{#if fileUpload == true}
 	<div class="boxLeft">
@@ -84,6 +83,9 @@
 	<button class="bx-button small function" on:click={count}>
 		Count
 	</button>
+	<button class="bx-button small function" on:click={clearTextbox}>
+		Clear textbox
+	</button><br>
 	<p class="errors"></p>
 	</div>
 
