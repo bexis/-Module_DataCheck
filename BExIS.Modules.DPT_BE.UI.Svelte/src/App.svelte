@@ -25,7 +25,7 @@
 	async function count()
 	{
 		//send to bexis textareaPlots
-		plotsid = textareaPlots.split(/[\r\n,\t]+/);
+		plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
 		console.log(plotsid);
 		const respone = await countPlots(plotsid, header);
 		console.log(respone);
