@@ -2,6 +2,7 @@
 	import {countPlots} from './services/Caller';
 	import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
 	import { onMount,  } from 'svelte';
+	import { Spinner } from 'sveltestrap';
 
 	let files;
 	let plotsid = [];
@@ -63,13 +64,13 @@
 
 	<div class="boxOuter">
 
-	<p class="dtm-para_green">Enter plot ids in the text field or upload file.
+	<p class="dtm-para_green">Count and check plot IDs.
 	</p>
-
+	<p class="text">Allowed separators: comma, semicolon, space characters and enter. Also in combination.</p>
 	<div class="boxLeft"><b>Plots:</b><br><textarea  bind:value={textareaPlots}></textarea><br>
 		
 
-	<input type="checkbox" bind:checked={fileUpload}/> <b>Upload plots via file</b>
+	<input type="checkbox" bind:checked={fileUpload}/> <b>File upload</b>
 	
 	</div>
 	{#if fileUpload == true}
@@ -82,14 +83,17 @@
 		</div>	{/if}
 	
 	<hr class="dtm-para_green"/>
+	<div class="buttonList">
 	<button class="bx-button small function" on:click={count}>
-		Count
+		Run
 	</button>
 	<button class="bx-button small function" on:click={clear}>
-		Clear textbox
+		Clear
 	</button><br>
 	<p class="errors"></p>
 	</div>
+	</div>
+
 
 	{#if result}
 
@@ -97,31 +101,31 @@
 	
 	<p class="dtm-para_green">Result</p>
 	<ul>
-		<li><b>Number Of Plots</b></li>
+		<li><b>Number of plots</b></li>
 	{#each result.PlotProfiling.PlotTypeCounters as item, i}
 	
 		<p class="resultList"><b>Number of {item.PlotType}:</b> {item.Number}</p>
 
 	{/each}
 	<li><b>Joint Experiment 2020</b>
-		<p class="resultList"><b>JointExperimentForest: {#if result.PlotProfiling.JointExperimentForest == true}
+		<p class="resultList"><b>Forest:</b> {#if result.PlotProfiling.JointExperimentForest == true}
 			 yes
 		{:else}
 			 no
 		{/if}
 			
-		</b></p>
-		<p class="resultList"><b>JointExperimentGrld: {#if result.PlotProfiling.JointExperimentGrld == true}
+		</p>
+		<p class="resultList"><b>Grassland:</b> {#if result.PlotProfiling.JointExperimentGrld == true}
 			 yes
 		{:else}
 			 no
 		{/if}
-		</b></p>
+		</p>
 	</li>
 	
 	{#if result.NotVaildPlotIds.length > 0}
 
-		<li><b>Non valid plots</b></li>
+		<li><b>Non-valid plots</b></li>
 		<p class="resultList" style="overflow-y: scroll; height:100px;">
 		{#each result.NotVaildPlotIds as item, i}
 	
@@ -133,6 +137,11 @@
 	{/if}
 	</ul>
 	</div>
+
+	{:else}
+		<div class="spinnerBox">
+			<Spinner color="primary" size="sm" type ="grow" text-center />
+		</div>
 	{/if}
 
 	
@@ -149,7 +158,18 @@
 	}
 
 	textarea { 
-		width: 150px; height: 200px; 
+		width: 250px; height: 200px; 
+	}
+
+	.buttonList
+	{
+		padding-left: 20px;
+	}
+
+	.text
+	{
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 
 	.boxLeft{
@@ -168,7 +188,16 @@
      border-top: #388670 10px solid;
      margin-bottom: 1em;
 	 margin-right: 1em;
-}
+	}
+
+	 .spinnerBox
+	 {
+		float: left;
+	 	width: 30%;
+		margin-bottom: 1em;
+	 	margin-right: 1em;
+	 }
+
 
 
 
