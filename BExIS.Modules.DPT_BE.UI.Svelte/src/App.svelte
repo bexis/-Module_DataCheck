@@ -9,6 +9,7 @@
 	let result;
 	let fileUpload = false;
 	let header = false;
+	let run = false;
 
 	onMount(async () => {
   		console.log("start edit");
@@ -25,18 +26,21 @@
 
 	async function count()
 	{
+		run = true;
 		//send to bexis textareaPlots
 		plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
 		console.log(plotsid);
 		const respone = await countPlots(plotsid, header);
 		console.log(respone);
 		result = respone;
+		
 	}
 
 	function clear()
 	{
 		textareaPlots = "";
 		result ="";
+		run = false;
 
 	}
 
@@ -64,21 +68,22 @@
 
 	<div class="boxOuter">
 
-	<p class="dtm-para_green">Count and check plot IDs.
+	<p class="dtm-para_green">Count and check plot IDs
 	</p>
-	<p class="text">Allowed separators: comma, semicolon, space characters and enter. Also in combination.</p>
-	<div class="boxLeft"><b>Plots:</b><br><textarea  bind:value={textareaPlots}></textarea><br>
+	<p class="text">Enter plot IDs or upload a file. Allowed separators: comma, semicolon, space characters and enter. Also in combination.</p>
+	<div class="boxLeft"><b>Plots:</b><br>
+	<textarea  bind:value={textareaPlots}></textarea><br>
 		
 
-	<input type="checkbox" bind:checked={fileUpload}/> <b>File upload</b>
+	<input type="checkbox" bind:checked={fileUpload}/> <b>File upload (.csv, .txt)</b>
 	
 	</div>
 	{#if fileUpload == true}
 	<div class="boxLeft">
-		<input type="checkbox" bind:checked={header}/> File header
+		<input type="checkbox" bind:checked={header}/> File header exist
 		<form on:submit|preventDefault={handleSubmit}>
 			<input type="file" bind:files><br>
-			<input type="submit" value="Submit" />	
+			<input type="submit" value="Submit" class="bx-button small function"/>	
 		</form>
 		</div>	{/if}
 	
@@ -107,7 +112,7 @@
 		<p class="resultList"><b>Number of {item.PlotType}:</b> {item.Number}</p>
 
 	{/each}
-	<li><b>Joint Experiment 2020</b>
+	<li><b>Joint Experiment 2020</b>	</li>
 		<p class="resultList"><b>Forest:</b> {#if result.PlotProfiling.JointExperimentForest == true}
 			 yes
 		{:else}
@@ -121,7 +126,7 @@
 			 no
 		{/if}
 		</p>
-	</li>
+
 	
 	{#if result.NotVaildPlotIds.length > 0}
 
@@ -139,9 +144,13 @@
 	</div>
 
 	{:else}
+	
+	{#if run == true}
 		<div class="spinnerBox">
-			<Spinner color="primary" size="sm" type ="grow" text-center />
-		</div>
+			<Spinner color="primary" size="sm" />
+		</div>	
+	{/if}
+		
 	{/if}
 
 	
@@ -158,7 +167,10 @@
 	}
 
 	textarea { 
-		width: 250px; height: 200px; 
+		width: 500px;
+		height: 200px; 
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 
 	.buttonList
