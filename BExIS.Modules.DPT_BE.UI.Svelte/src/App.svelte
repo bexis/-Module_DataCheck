@@ -90,12 +90,22 @@
 	
 	<hr class="dtm-para_green"/>
 	<div class="buttonList">
-	<button class="bx-button small function" on:click={count}>
-		Run
-	</button>
-	<button class="bx-button small function" on:click={clear}>
+	{#if textareaPlots}
+		<button class="bx-button small function" on:click={count}>
+			Run
+		</button>
+		<button class="bx-button small function" on:click={clear}>
 		Clear
-	</button><br>
+		</button>	
+	{:else}
+		<button class="bx-button small function bx-disabled" on:click={count}>
+			Run
+		</button>
+		<button class="bx-button small function bx-disabled" on:click={clear}>
+		Clear
+		</button>		
+	{/if}
+	<br>
 	<p class="errors"></p>
 	</div>
 	</div>
