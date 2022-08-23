@@ -111,19 +111,20 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                     {
                         gps.Number++;
 
-                        if (row.Field<string>("Plotlevel") == "EP")
+                        switch(row.Field<string>("Plotlevel"))
                         {
-                            DataRow rowEp = epPlotRefTable.AsEnumerable().Where(a => a.Field<string>("PlotID") == plot).FirstOrDefault();
-                            if (rowEp != null)
-                            {
+                            case "EP":
                                 eps.Number++;
-
-                                if (rowEp.Field<string>("VIP") == "yes")
-                                    vips.Number++;
-
-                                if (rowEp.Field<string>("MIP") == "yes")
-                                    mips.Number++;
-                            }
+                            break;
+                            case "MIP":
+                                eps.Number++;
+                                mips.Number++;
+                            break;
+                            case "VIP":
+                                eps.Number++;
+                                mips.Number++;
+                                vips.Number++;
+                            break;
                         }
                     }
                     else
