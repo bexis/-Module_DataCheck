@@ -27,6 +27,7 @@
 	async function count()
 	{
 		run = true;
+		result="";
 		//send to bexis textareaPlots
 		plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
 		console.log(plotsid);
@@ -168,9 +169,8 @@
 
 	textarea { 
 		width: 500px;
-		height: 200px; 
-		padding-left: 20px;
-		padding-right: 20px;
+		height: 200px;
+
 	}
 
 	.buttonList
