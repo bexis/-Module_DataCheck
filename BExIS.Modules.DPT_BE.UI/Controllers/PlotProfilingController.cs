@@ -102,7 +102,12 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                 }
             }
 
-            foreach (var plot in plotList)
+            //remove duplicates
+            Dictionary<string, string> gpEpPlotsIDs = epPlotRefTable.AsEnumerable().ToDictionary<DataRow, string, string>(row => row.Field<string>(1),
+                                row => row.Field<string>(0));
+            List<string> plotWithOutDup = RemoveDuplicates(plotList, gpEpPlotsIDs);
+
+            foreach (var plot in plotWithOutDup)
             {
                 if (gpRegex.IsMatch(plot))
                 {
@@ -158,6 +163,33 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             model.PlotProfiling.PlotTypeCounters.Add(vips);
 
             return Json(model);
+        }
+
+        private List<string> RemoveDuplicates(List<string> plots, Dictionary<string, string> gpEpPlotsIDs)
+        {
+            Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
+            Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
+
+            List<string> newPlotsList = new List<string>(plots);
+
+            foreach (var plot in plots)
+            {
+                if (gpRegex.IsMatch(plot))
+                {
+                    string ep = gpEpPlotsIDs[plot];
+                    if (plots.Contains(ep))
+                        newPlotsList.Remove(ep);
+                }
+
+                if(epRegex.IsMatch(plot))
+                {
+                    string gp = gpEpPlotsIDs.FirstOrDefault(x => x.Value == plot).Key;
+                    if(plot.Contains(gp))
+                        newPlotsList.Remove(gp);
+                }
+            }
+
+            return newPlotsList;
         }
 
 
