@@ -10,6 +10,7 @@
 	let fileUpload = false;
 	let header = false;
 	let run = false;
+	let fileError = "";
 
 	onMount(async () => {
   		console.log("start edit");
@@ -47,6 +48,9 @@
 
 	function readFile(file)
 	{
+		if(file.type == "text/plain" || file.type == "text/csv")
+		{
+		fileError = "";
 		const reader = new FileReader();
 		const input = file;
 		let json;
@@ -60,6 +64,11 @@
 		textareaPlots = text
 
       };
+	}
+	else
+	{
+		fileError = "File format is not supported. Please use .txt or .csv.";
+	}
 
 	}
 </script>
@@ -84,7 +93,7 @@
 		<input type="checkbox" bind:checked={header}/> File header exist
 		<form on:submit|preventDefault={handleSubmit}>
 			<input type="file" bind:files><br>
-			<input type="submit" value="Submit" class="bx-button small function"/>	
+			<input type="submit" value="Submit" class="bx-button small function"/> <p style="color: red; width: 400px;">{fileError}</p>
 		</form>
 		</div>	{/if}
 	
