@@ -20,11 +20,8 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return View();
         }
 
-        public JsonResult CountPlots(string[] plots, bool header = false)
+        public JsonResult CountPlots(string[] plots)
         {
-            if(header)
-                plots = plots.Skip(1).ToArray();
-
             plots = plots.Distinct().ToArray();
 
             //list for non new exp plots

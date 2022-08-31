@@ -14,7 +14,7 @@
 
 	onMount(async () => {
   		console.log("start edit");
-  		//setApiConfig("https://localhost:44345","","");
+  		setApiConfig("https://localhost:44345","","");
 	})
 
 	let textareaPlots ="";
@@ -29,10 +29,22 @@
 	{
 		run = true;
 		result="";
+		
+		//if header remove first line
+		if(header)
+		{
+			var lines = textareaPlots.split('\n');
+			lines.splice(0,1);
+			let newText = lines.join('\n');
+			plotsid = newText.split(/[\r\n,\t\s;]+/);
+
+		}
+		else
+		{
+			plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
+		}
 		//send to bexis textareaPlots
-		plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
-		console.log(plotsid);
-		const respone = await countPlots(plotsid, header);
+		const respone = await countPlots(plotsid);
 		console.log(respone);
 		result = respone;
 		
