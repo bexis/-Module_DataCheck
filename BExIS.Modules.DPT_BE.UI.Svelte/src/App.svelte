@@ -199,10 +199,11 @@
 	}
 
 	textarea { 
-		width: 500px;
+		width: 100%;
 		height: 200px;
 
 	}
+
 
 	.buttonList
 	{
@@ -219,7 +220,7 @@
 	 
      padding: 20px;
      background: #FFF;
-	 width: 40%;
+	 /* width: 40%; */
 	}
 
 	.boxOuter {
