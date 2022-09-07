@@ -88,6 +88,8 @@
 
 <main>
 
+	<div class="container">
+
 	<div class="boxOuter">
 
 	<p class="dtm-para_green">Count and check plot IDs
@@ -160,18 +162,23 @@
 		</p>
 
 	
+	<li><b>Further details</b></li>
+	<p class="resultList"><b>Number of entered plots:</b> {result.NumberOfAllPlots}</p>
+	<p class="resultList"><b>Number of duplicate plots:</b> {result.NumberOfDuplicates}</p>
+	<p class="resultList-overflow"><b>Non-valid plots: </b>
+
 	{#if result.NotVaildPlotIds.length > 0}
 
-		<li><b>Non-valid plots</b></li>
-		<p class="resultList" style="overflow-y: scroll; height:100px;">
 		{#each result.NotVaildPlotIds as item, i}
+			{item}{#if i < (result.NotVaildPlotIds.length-1)},{/if}
 	
-		{item}<br>
+			{/each}
 
-		{/each}
-		</p>
-	
+	{:else}
+			none
+
 	{/if}
+	</p>
 	</ul>
 	</div>
 
@@ -187,10 +194,11 @@
 
 	
 	
-
+	</div>
 </main>
 
 <style>
+
 	main {
 		text-align: left;
 		padding: 1em;
@@ -204,10 +212,16 @@
 
 	}
 
+	.container
+	{
+		display: flex;
+		margin-left: 0;
+	}
 
 	.buttonList
 	{
 		padding-left: 20px;
+		margin-top: 60px;
 	}
 
 	.text
@@ -225,7 +239,8 @@
 
 	.boxOuter {
      float: left;
-	 width: 30%;
+	 width: 40%;
+	 /* height: 550px; */
 	 border-left: #388670 6px solid;
 	 border-right: #388670 2px solid;
      border-bottom: #388670 2px solid;
@@ -243,9 +258,8 @@
 	 }
 
 
-
-
-.dtm-para_green {
+.dtm-para_green 
+{
     background-color: #bbddd9;
     font-size: 14px;
     padding: 0.5em;
@@ -255,11 +269,20 @@
 
 .resultList
 {
-	margin-left: 100px;
-	margin-right: 100px;
+	margin-left: 100px;	
 }
 
-	@media (min-width: 640px) {
+.resultList-overflow
+{
+	margin-left: 100px;
+	margin-right: 100px;
+	height:60px;
+    overflow-y : scroll;
+
+}
+
+	@media (min-width: 640px) 
+	{
 		main {
 			max-width: none;
 		}

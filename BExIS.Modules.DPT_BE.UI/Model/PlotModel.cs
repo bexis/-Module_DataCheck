@@ -13,13 +13,16 @@ namespace BExIS.Modules.DPT_BE.UI.Model
 
         public List<string> NotVaildPlotIds { get; set; }
 
+        public int NumberOfAllPlots { get; set; }
+
+        public int NumberOfDuplicates { get; set; }
+
         public PlotModel()
         {
             PlotIds = new List<string>();
             PlotProfiling = new PlotProfiling();
             NotVaildPlotIds = new List<string>();
         }
-
     }
 
     public class PlotProfiling
@@ -36,7 +39,6 @@ namespace BExIS.Modules.DPT_BE.UI.Model
             JointExperimentGrld = false;
         }
     }
-
 
     public class PlotTypeCounter
     {

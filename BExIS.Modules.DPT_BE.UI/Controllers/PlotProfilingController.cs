@@ -22,6 +22,12 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
         public JsonResult CountPlots(string[] plots)
         {
+            PlotModel model = new PlotModel();
+            model.NumberOfAllPlots = plots.Length;
+
+            //count dupliactes 
+            model.NumberOfDuplicates = plots.GroupBy(a => a).Count(a => a.Count() > 1);
+            //remove dublicates
             plots = plots.Distinct().ToArray();
 
             //list for non new exp plots
@@ -52,8 +58,6 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             List<string> foxPlots = foxPlotRefTable.AsEnumerable().Select(a => a.Field<string>("Joint Experiment ID")).ToList();
             List<string> glnewExpPlots = gNewExpPlotRefTable.AsEnumerable().Select(a => a.Field<string>("Joint Experiment ID")).ToList();
 
-            PlotModel model = new PlotModel();
-
             PlotTypeCounter gps = new PlotTypeCounter("GP");
             PlotTypeCounter eps = new PlotTypeCounter("EP");
             PlotTypeCounter vips = new PlotTypeCounter("VIP");
@@ -62,7 +66,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
             Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
 
-            //check first if new exp plots are there and ad info to the model
+            //check first if new exp plots are in the list and add info about it to the model
             foreach (var plot in plots)
             {
                 if (foxPlots.Contains(plot))
@@ -102,7 +106,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             //remove duplicates
             Dictionary<string, string> gpEpPlotsIDs = epPlotRefTable.AsEnumerable().ToDictionary<DataRow, string, string>(row => row.Field<string>(1),
                                 row => row.Field<string>(0));
-            List<string> plotWithOutDup = RemoveDuplicates(plotList, gpEpPlotsIDs);
+            List<string> plotWithOutDup = RemoveDuplicates(plotList, gpEpPlotsIDs, model);
 
             foreach (var plot in plotWithOutDup)
             {
@@ -162,7 +166,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return Json(model);
         }
 
-        private List<string> RemoveDuplicates(List<string> plots, Dictionary<string, string> gpEpPlotsIDs)
+        private List<string> RemoveDuplicates(List<string> plots, Dictionary<string, string> gpEpPlotsIDs, PlotModel model)
         {
             Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
             Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg]\d{1,3}$");
@@ -175,14 +179,20 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                 {
                     string ep = gpEpPlotsIDs[plot];
                     if (plots.Contains(ep))
+                    {
                         newPlotsList.Remove(ep);
+                        model.NumberOfDuplicates++;
+                    }
                 }
 
                 if(epRegex.IsMatch(plot))
                 {
                     string gp = gpEpPlotsIDs.FirstOrDefault(x => x.Value == plot).Key;
-                    if(plot.Contains(gp))
+                    if (plot.Contains(gp))
+                    {
                         newPlotsList.Remove(gp);
+                        model.NumberOfDuplicates++;
+                    }
                 }
             }
 
