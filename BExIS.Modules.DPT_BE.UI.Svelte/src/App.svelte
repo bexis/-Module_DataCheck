@@ -1,6 +1,6 @@
 <script>
-	import {countPlots} from './services/Caller';
-	import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
+	// import {countPlots} from './services/Caller';
+	// import { setApiConfig }  from '@bexis2/svelte-bexis2-core-ui';
 	import { onMount,  } from 'svelte';
 	import { Spinner } from 'sveltestrap';
 
@@ -12,10 +12,33 @@
 	let run = false;
 	let fileError = "";
 
+	export const HostURL = '/api/DPT_BE/CountPlots';
+
+
 	onMount(async () => {
-  		console.log("start edit");
-  		setApiConfig("https://localhost:44345","","");
+  		//console.log("start edit");
+  		//setApiConfig("https://localhost:44345","","");
 	})
+
+	// Fetch data from API and return as JSON object
+	async function getData (url, plots) {
+
+		let data = {
+    	plots: plots
+    		};
+
+		console.log(data);
+		const res = await fetch(url, {
+			method: 'POST',
+			headers: {
+			'content-type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+
+    	let result = await res.json();
+   		return result;
+	}	
 
 	let textareaPlots ="";
 
@@ -44,7 +67,7 @@
 			plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
 		}
 		//send to bexis textareaPlots
-		const respone = await countPlots(plotsid);
+		const respone = await getData(HostURL, plotsid);
 		console.log(respone);
 		result = respone;
 		

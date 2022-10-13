@@ -79,5 +79,12 @@ namespace BExIS.Modules.DPT_BE.UI.Models
 
     }
 
-  
+
+    public class PostApiPlotCount
+    {
+        public string[] plots { get; set; }
+    }
+
+
+
 }
