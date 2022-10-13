@@ -57,6 +57,7 @@
 		if(header)
 		{
 			var lines = textareaPlots.split('\n');
+			lines.filter(line => line.trim() !== '');
 			lines.splice(0,1);
 			let newText = lines.join('\n');
 			plotsid = newText.split(/[\r\n,\t\s;]+/);
@@ -64,7 +65,7 @@
 		}
 		else
 		{
-			plotsid = textareaPlots.split(/[\r\n,\t\s;]+/);
+			plotsid = textareaPlots.split(/[\r\n,\t\s;]+/).filter(line => line.trim() !== '');
 		}
 		//send to bexis textareaPlots
 		const respone = await getData(HostURL, plotsid);
