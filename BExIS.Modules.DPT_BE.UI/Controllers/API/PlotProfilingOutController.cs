@@ -71,9 +71,6 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             PlotTypeCounter vips = new PlotTypeCounter("VIP");
             PlotTypeCounter mips = new PlotTypeCounter("MIP");
 
-            Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
-            Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg][1-9]{1,3}$");
-
             //check first if new exp plots are in the list and add info about it to the model
             foreach (var plot in plots)
             {
@@ -118,33 +115,33 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
             foreach (var plot in plotWithOutDup)
             {
-                if (gpRegex.IsMatch(plot))
+                if (gpEpPlotsIDs.Keys.Contains(plot))
                 {
                     DataRow row = gpPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Plot_ID") == plot).FirstOrDefault();
                     if (row != null)
                     {
                         gps.Number++;
 
-                        switch(row.Field<string>("Plotlevel"))
+                        switch (row.Field<string>("Plotlevel"))
                         {
                             case "EP":
                                 eps.Number++;
-                            break;
+                                break;
                             case "MIP":
                                 eps.Number++;
                                 mips.Number++;
-                            break;
+                                break;
                             case "VIP":
                                 eps.Number++;
                                 mips.Number++;
                                 vips.Number++;
-                            break;
+                                break;
                         }
                     }
                     else
                         model.NotVaildPlotIds.Add(plot);
                 }
-                else if (epRegex.IsMatch(plot))
+                else if (gpEpPlotsIDs.Values.Contains(plot))
                 {
                     DataRow row = epPlotRefTable.AsEnumerable().Where(a => a.Field<string>("EP_PlotID") == plot).FirstOrDefault();
                     if (row != null)
@@ -182,14 +179,11 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
         private List<string> RemoveDuplicates(List<string> plots, Dictionary<string, string> gpEpPlotsIDs, PlotModel model)
         {
-            Regex gpRegex = new Regex(@"^[HhSsAa]\d{1,5}$");
-            Regex epRegex = new Regex(@"^[HhSsAa][Ee][WwGg][1-9]{1,3}$");
-
             List<string> newPlotsList = new List<string>(plots);
 
             foreach (var plot in plots)
             {
-                if (gpRegex.IsMatch(plot))
+                if (gpEpPlotsIDs.Keys.Contains(plot))
                 {
                     string ep = gpEpPlotsIDs[plot];
                     if (plots.Contains(ep))
@@ -199,7 +193,7 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                     }
                 }
 
-                if(epRegex.IsMatch(plot))
+                if(gpEpPlotsIDs.Values.Contains(plot))
                 {
                     string gp = gpEpPlotsIDs.FirstOrDefault(x => x.Value == plot).Key;
                     if (plot.Contains(gp))
