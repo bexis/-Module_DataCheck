@@ -516,8 +516,7 @@
       <Project>{b423a986-eb03-4696-aade-a5e8ea11fc73}</Project>
       <Name>BEXIS.SWS.Services</Name>
     </ProjectReference>
-
-   </ItemGroup>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
