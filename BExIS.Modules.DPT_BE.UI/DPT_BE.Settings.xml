@@ -4,8 +4,8 @@
   <entry key="key2" value="value2" type="String"/>
   <entry key="key3" value="21" type="Int16"/>
 
- <entry key="epRefDataset" value="20826" type="int"/>
- <entry key="gpRefDataset" value="20907" type="int"/>
- <entry key="foxRefDataset" value="31040" type="int"/>
- <entry key="gNewExpDataset" value="31307" type="int"/>
+	<entry key="epRefDataset" value="20826" type="int"/>
+	<entry key="gpRefDataset" value="20907" type="int"/>
+	<entry key="foxRefDataset" value="31265" type="int"/>
+	<entry key="gNewExpDataset" value="31307" type="int"/>
 </settings>

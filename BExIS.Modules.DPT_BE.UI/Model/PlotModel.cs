@@ -28,6 +28,13 @@ namespace BExIS.Modules.DPT_BE.UI.Model
     public class PlotProfiling
     {
         public List<PlotTypeCounter> PlotTypeCounters { get; set; }
+
+        public bool Grassland { get; set; }
+        public bool Forest { get; set; }
+        public bool REX1  { get; set; }
+        public bool REX2 { get; set; }
+        public bool LUX { get; set; }
+        public bool FOX { get; set; }
         public  bool JointExperimentForest { get; set; }
         public bool JointExperimentGrld { get; set; }
 
@@ -37,6 +44,12 @@ namespace BExIS.Modules.DPT_BE.UI.Model
             PlotTypeCounters = new List<PlotTypeCounter>();
             JointExperimentForest = false;
             JointExperimentGrld = false;
+            REX1 = false;
+            REX2 = false;
+            LUX = false;
+            FOX = false;
+            Grassland = false;
+            Forest = false;
         }
     }
 

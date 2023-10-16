@@ -76,10 +76,12 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             {
                 if (foxPlots.Contains(plot))
                 {
+                    model.PlotProfiling.Forest = true;
                     DataRow row = foxPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Joint Experiment ID") == plot).FirstOrDefault();
                     if(row != null)
                     {
                         model.PlotProfiling.JointExperimentForest = true;
+                        model.PlotProfiling.FOX = true;
 
                         //remove new exp plot from list
                         plotList.Remove(plot);
@@ -93,7 +95,9 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                 }
                 else if(glnewExpPlots.Contains(plot))
                 {
+                    model.PlotProfiling.Grassland = true;
                     DataRow row = gNewExpPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Joint Experiment ID") == plot).FirstOrDefault();
+
                     if (row != null)
                     {
                         model.PlotProfiling.JointExperimentGrld = true;
@@ -104,6 +108,15 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                         string ep = row.Field<string>("EP ID");
                         if (!plots.Contains(ep) && !plotList.Contains(ep))
                             plotList.Add(ep);
+                        if(row.Field<string>("REX I") == "yes")
+                            model.PlotProfiling.REX1 = true;
+                        if (row.Field<string>("REX II") == "yes")
+                            model.PlotProfiling.REX2 = true;
+
+                        if (row.Field<string>("LUX") == "yes")
+                            model.PlotProfiling.LUX = true;
+
+
                     }
                 }
             }
@@ -120,6 +133,12 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                     DataRow row = gpPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Plot_ID") == plot).FirstOrDefault();
                     if (row != null)
                     {
+                        if (row.Field<string>("Landuse") == "F")
+                            model.PlotProfiling.Forest = true;
+
+                        if (row.Field<string>("Landuse") == "G")
+                            model.PlotProfiling.Grassland = true;
+
                         gps.Number++;
 
                         switch (row.Field<string>("Plotlevel"))
@@ -154,6 +173,13 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
 
                         if (row.Field<string>("MIP") == "yes")
                             mips.Number++;
+
+                        if (row.Field<string>("Landuse") == "F")
+                            model.PlotProfiling.Forest = true;
+
+                        if (row.Field<string>("Landuse") == "G")
+                            model.PlotProfiling.Grassland = true;
+
                     }
                     else
                         model.NotVaildPlotIds.Add(plot);
