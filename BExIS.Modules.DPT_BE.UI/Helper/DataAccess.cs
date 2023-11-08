@@ -60,7 +60,7 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
                             for (int j = 0; j < data.Columns.Count; j++)
                             {
                                 a = l[j].Value;
-                                if (String.IsNullOrEmpty(l[j].Value))
+                                if (String.IsNullOrEmpty(l[j].Value) || l[j].Value == "NA")
                                     dr[data.Columns[j].ColumnName] = DBNull.Value;
                                 else
                                     dr[data.Columns[j].ColumnName] = l[j].Value;
