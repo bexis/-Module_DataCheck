@@ -430,6 +430,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\BexisServer_2010-testsite.pubxml" />
+    <None Include="Properties\PublishProfiles\BexisServer_BE-Website.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -516,8 +517,7 @@
       <Project>{b423a986-eb03-4696-aade-a5e8ea11fc73}</Project>
       <Name>BEXIS.SWS.Services</Name>
     </ProjectReference>
-
-   </ItemGroup>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
