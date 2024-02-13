@@ -1,0 +1,47 @@
+{
+  "id": "dpt_be",
+  "name": "Data Profiling Tools",
+  "description": "...",
+  "entries": [
+    {
+      "key": "help",
+      "title": "Help URL",
+      "value": "",
+      "type": "String",
+      "description": "URL to the manual. If empty, it links to the latest manual from BEXIS2"
+    },
+    {
+      "key": "epRefDataset",
+      "title": "epRefDataset",
+      "value": 20826,
+      "description": "",
+      "type": "Int16",
+      "options": []
+    },
+    {
+      "key": "gpRefDataset",
+      "title": "gpRefDataset",
+      "value": 20907,
+      "description": "",
+      "type": "Int16",
+      "options": []
+    },
+    {
+      "key": "foxRefDataset",
+      "title": "foxRefDataset",
+      "value": 31265,
+      "description": "",
+      "type": "Int16",
+      "options": []
+    },
+    {
+      "key": "gNewExpDataset",
+      "title": "gNewExpDataset",
+      "value": 31307,
+      "description": "",
+      "type": "Int16",
+      "options": []
+    }
+
+  ]
+}

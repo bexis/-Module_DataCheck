@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Web.Http;
+using Vaiona.Web.Mvc.Modularity;
 
 namespace BExIS.Modules.DPT_BE.UI.Controllers
 {
@@ -41,22 +42,24 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             //list for non new exp plots
             List<string> plotList = plots.ToList();
 
+            var settings = ModuleManager.GetModuleSettings("dpt_be");
+
             //get gp ref dataset 
-            string gpRefDatasetId = Models.Settings.get("gpRefDataset").ToString();
+            string gpRefDatasetId = settings.GetValueByKey("gpRefDataset").ToString();
             var datasetObjectGp = DataAccess.GetDatasetInfo(gpRefDatasetId, GetServerInformation());
             DataTable gpPlotRefTable = DataAccess.GetData(gpRefDatasetId, long.Parse(datasetObjectGp.DataStructureId), GetServerInformation());
 
             //get ep ref data set to find mips and vips
-            string epRefDatasetId = Models.Settings.get("epRefDataset").ToString();
+            string epRefDatasetId = settings.GetValueByKey("epRefDataset").ToString();
             var datasetObject = DataAccess.GetDatasetInfo(epRefDatasetId, GetServerInformation());
             DataTable epPlotRefTable = DataAccess.GetData(epRefDatasetId, long.Parse(datasetObject.DataStructureId), GetServerInformation());
 
             //get new experiment plots datasets
-            string foxRefDatasetId = Models.Settings.get("foxRefDataset").ToString();
+            string foxRefDatasetId = settings.GetValueByKey("foxRefDataset").ToString();
             var datasetObjectFox = DataAccess.GetDatasetInfo(foxRefDatasetId, GetServerInformation());
             DataTable foxPlotRefTable = DataAccess.GetData(foxRefDatasetId, long.Parse(datasetObjectFox.DataStructureId), GetServerInformation());
 
-            string gNewExpRefDatasetId = Models.Settings.get("gNewExpDataset").ToString();
+            string gNewExpRefDatasetId = settings.GetValueByKey("gNewExpDataset").ToString();
             var datasetObjectgNewExp = DataAccess.GetDatasetInfo(gNewExpRefDatasetId, GetServerInformation());
             DataTable gNewExpPlotRefTable = DataAccess.GetData(gNewExpRefDatasetId, long.Parse(datasetObjectgNewExp.DataStructureId), GetServerInformation());
 
@@ -250,28 +253,28 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
             return serverInformation;
         }
 
-        private string GetUserToken()
-        {
-            var identityUserService = new IdentityUserService();
-            var userManager = new UserManager();
+        //private string GetUserToken()
+        //{
+        //    var identityUserService = new IdentityUserService();
+        //    var userManager = new UserManager();
 
-            try
-            {
-                long userId = 0;
-                long.TryParse(this.User.Identity.GetUserId(), out userId);
+        //    try
+        //    {
+        //        long userId = 0;
+        //        long.TryParse(this.User.Identity.GetUserId(), out userId);
 
-                var user = identityUserService.FindById(userId);
+        //        var user = identityUserService.FindById(userId);
 
-                user = identityUserService.FindById(userId);
-                var token = userManager.GetTokenAsync(user).Result;
-                return token;
-            }
-            finally
-            {
-                identityUserService.Dispose();
-                userManager.Dispose();
-            }
-        }
+        //        user = identityUserService.FindById(userId);
+        //        var token = userManager.GetTokenAsync(user).Result;
+        //        return token;
+        //    }
+        //    finally
+        //    {
+        //        identityUserService.Dispose();
+        //        userManager.Dispose();
+        //    }
+        //}
 
     }
 }
