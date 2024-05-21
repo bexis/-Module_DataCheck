@@ -189,9 +189,9 @@ let textareaPlots ="";
 		{:else}
 		
 		{#if run == true}
-			<!-- <div class="spinnerBox">
-				<Spinner color="primary" size="sm" />
-			</div>	 -->
+			<div class="spinnerBox">
+				<Spinner label="counting plots" />
+			</div>	
 		{/if}
 			
 		{/if}
