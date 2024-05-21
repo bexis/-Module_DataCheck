@@ -245,36 +245,11 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
         {
             ServerInformation serverInformation = new ServerInformation();
             var uri = System.Web.HttpContext.Current.Request.Url;
-            //serverInformation.ServerName = "http://be2020-dev.inf-bb.uni-jena.de:2010/";
-            serverInformation.Token = "k4ywfsj6X32sXE62XybjtvJk5fs2JqNXyBmzkR7apBMgigwz9hiW3mFyR6uW7qy5";
             serverInformation.ServerName = uri.GetLeftPart(UriPartial.Authority) + "/";
-            //serverInformation.Token = GetUserToken();
+            var settings = ModuleManager.GetModuleSettings("dpt_be");
+            serverInformation.UsernamePassword = settings.GetValueByKey("username")+":"+ settings.GetValueByKey("password");
 
             return serverInformation;
         }
-
-        //private string GetUserToken()
-        //{
-        //    var identityUserService = new IdentityUserService();
-        //    var userManager = new UserManager();
-
-        //    try
-        //    {
-        //        long userId = 0;
-        //        long.TryParse(this.User.Identity.GetUserId(), out userId);
-
-        //        var user = identityUserService.FindById(userId);
-
-        //        user = identityUserService.FindById(userId);
-        //        var token = userManager.GetTokenAsync(user).Result;
-        //        return token;
-        //    }
-        //    finally
-        //    {
-        //        identityUserService.Dispose();
-        //        userManager.Dispose();
-        //    }
-        //}
-
     }
 }

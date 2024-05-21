@@ -13,7 +13,7 @@ namespace BExIS.Modules.DPT_BE.UI.Models
     public class ServerInformation
     {
         public string ServerName { get; set; }
-        public string Token { get; set; }
+        public string UsernamePassword { get; set; }
 
     }
 

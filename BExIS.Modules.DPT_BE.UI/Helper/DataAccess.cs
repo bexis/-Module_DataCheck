@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 
 namespace BExIS.Modules.DPT_BE.UI.Helper
@@ -23,7 +24,9 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
         {
             string link = serverInformation.ServerName + "/api/data/" + datasetId;
             HttpWebRequest request = WebRequest.Create(link) as HttpWebRequest;
-            request.Headers.Add("Authorization", "Bearer " + serverInformation.Token);
+            request.UseDefaultCredentials = true;
+            string myCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(serverInformation.UsernamePassword));
+            request.Headers.Add("Authorization", "Basic " + myCredentials);
             // request.ContentType = "application/json";
 
             DataStructureObject dataStructureObject = GetDataStructure(structureId, serverInformation);
@@ -91,7 +94,8 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
         {
             string link = serverInformation.ServerName + "/api/structures/" + structId;
             HttpWebRequest request = WebRequest.Create(link) as HttpWebRequest;
-            request.Headers.Add("Authorization", "Bearer " + serverInformation.Token);
+            string myCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(serverInformation.UsernamePassword));
+            request.Headers.Add("Authorization", "Basic " + myCredentials);
 
             DataStructureObject dataStructureObject = new DataStructureObject();
 
@@ -124,7 +128,8 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
         {
             string link = serverInformation.ServerName + "/api/dataset/" + datasetId;
             HttpWebRequest request = WebRequest.Create(link) as HttpWebRequest;
-            request.Headers.Add("Authorization", "Bearer " + serverInformation.Token);
+            string myCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(serverInformation.UsernamePassword));
+            request.Headers.Add("Authorization", "Basic " + myCredentials);
 
             DatasetObject datasetObject = new DatasetObject();
 
@@ -146,6 +151,12 @@ namespace BExIS.Modules.DPT_BE.UI.Helper
             }
 
             return datasetObject;
+        }
+
+        private string GetRequestHeader(string usernameandpassword)
+        {
+            string myCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(usernameandpassword));
+            return "Authorization, Basic " + myCredentials;
         }
     }
 }

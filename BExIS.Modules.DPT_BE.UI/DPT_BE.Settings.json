@@ -11,6 +11,22 @@
       "description": "URL to the manual. If empty, it links to the latest manual from BEXIS2"
     },
     {
+      "key": "username",
+      "title": "Username",
+      "value": "",
+      "description": "",
+      "type": "String",
+      "options": []
+    },
+    {
+      "key": "password",
+      "title": "Password",
+      "value": "",
+      "description": "",
+      "type": "String",
+      "options": []
+    },
+    {
       "key": "epRefDataset",
       "title": "epRefDataset",
       "value": 20826,
@@ -18,6 +34,7 @@
       "type": "Int16",
       "options": []
     },
+
     {
       "key": "gpRefDataset",
       "title": "gpRefDataset",
