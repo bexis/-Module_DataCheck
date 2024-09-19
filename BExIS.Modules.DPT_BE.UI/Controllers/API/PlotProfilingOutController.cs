@@ -126,9 +126,10 @@ namespace BExIS.Modules.DPT_BE.UI.Controllers
                                 row => row.Field<string>(0));
             List<string> plotWithOutDup = RemoveDuplicates(plotList, gpEpPlotsIDs, model);
 
+            List<string> gpPlots = gpPlotRefTable.AsEnumerable().Select(a => a.Field<string>("Plot_ID")).ToList();
             foreach (var plot in plotWithOutDup)
             {
-                if (gpEpPlotsIDs.Keys.Contains(plot))
+                if (gpPlots.Contains(plot))
                 {
                     DataRow row = gpPlotRefTable.AsEnumerable().Where(a => a.Field<string>("Plot_ID") == plot).FirstOrDefault();
                     if (row != null)
