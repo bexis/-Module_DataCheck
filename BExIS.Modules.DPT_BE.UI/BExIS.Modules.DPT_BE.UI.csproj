@@ -405,7 +405,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="DPT_BE.Settings.json" />
-    <None Include="Properties\PublishProfiles\BexisServer_2010-testsite.pubxml" />
+    <None Include="Properties\PublishProfiles\BexisServer_2030-testsite.pubxml" />
     <None Include="Properties\PublishProfiles\BexisServer_BE-Website.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
@@ -554,7 +554,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-</Target>
+  </Target>
   <PropertyGroup>
     <PostBuildEvent>mkdir "$(SolutionDir)Console\Workspace\Modules\DPT_BE"
 C:\Windows\System32\xcopy "$(ProjectDir)DPT_BE.Settings.json" "$(SolutionDir)Console\Workspace\Modules\DPT_BE" /C /Y /I</PostBuildEvent>
