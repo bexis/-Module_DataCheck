@@ -4,7 +4,7 @@ import { setApiConfig } from '@bexis2/bexis2-core-ui';
 export function load() {
 	if (import.meta.env.DEV) {
 		console.log('dev');
-		setApiConfig('https://localhost:44345/', 'epetzold', '2021.B2.Go$On');
+		setApiConfig('http://localhost:44345/', 'epetzold', '2021.B2.Go$On');
 	}
 
 	return {};
