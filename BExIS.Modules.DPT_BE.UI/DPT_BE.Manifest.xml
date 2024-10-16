@@ -4,8 +4,6 @@
     ...
   </Description>
 	<Assemblies>
-    <Assembly fullName="BExIS.DPT_BE.Entities" role=""/>
-    <Assembly fullName="BExIS.DPT_BE.Services" role=""/>
 	</Assemblies>
 	<Dependencies>
 		<!--<Dependency moduleId="dcm" version="*.*.*" />-->
