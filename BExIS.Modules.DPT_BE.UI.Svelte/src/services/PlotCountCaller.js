@@ -3,7 +3,7 @@ import { setApiConfig } from '@bexis2/bexis2-core-ui';
 
 export const countPlots = async (plots) => {
   
-    setApiConfig('http://localhost:44345/', 'epetzold', '2021.B2.Go$On');
+    //setApiConfig('http://localhost:44345/', 'epetzold', '2021.B2.Go$On');
     let data = {
       plots: plots
       };
