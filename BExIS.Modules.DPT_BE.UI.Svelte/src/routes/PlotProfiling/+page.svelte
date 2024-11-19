@@ -92,13 +92,13 @@ let textareaPlots ="";
 
 	<main>
 
-		<div class="container">
+		<div class="p-5">
 	
 		<div class="boxOuter">
 	
-		<p class="dtm-para_green">Count and check plot IDs
-		</p>
-		<p class="text">Enter plot IDs or upload a file. Allowed separators: comma, semicolon, space characters and enter. Also in combination.</p>
+		<p class="dtm-para_green">Count and check plot IDs</p>
+
+		<p class="p-4">Enter plot IDs or upload a file. Allowed separators: comma, semicolon, space characters and enter. Also in combination.</p>
 		<div class="boxLeft"><b>Plots:</b><br>
 		<textarea  bind:value={textareaPlots}></textarea><br>
 			
@@ -108,31 +108,31 @@ let textareaPlots ="";
 		</div>
 		{#if fileUpload == true}
 		<div class="boxLeft">
-			<input type="checkbox" bind:checked={header}/> File header exist
+			<input type="checkbox" bind:checked={header}/> File header exists
 			<form on:submit|preventDefault={handleSubmit}>
-				<input type="file" bind:files><br>
-				<input type="submit" value="Submit" class="bx-button small function"/> <p style="color: red; width: 400px;">{fileError}</p>
+				<input type="file" bind:files>
+				<input type="submit" value="Submit" class="btn variant-filled-secondary"/> <p style="color: red; width: 400px;">{fileError}</p>
 			</form>
 			</div>	{/if}
 		
 		<hr class="dtm-para_green"/>
-		<div class="buttonList">
+		<div class="grid grid-cols-2 gap-4 p-5">
 		{#if textareaPlots}
-			<button class="bx-button small function" on:click={count}>
+			<button class="btn variant-filled-primary" on:click={count}>
 				Run
 			</button>
-			<button class="bx-button small function" on:click={clear}>
+			<button class="btn variant-filled-primary" on:click={clear}>
 			Clear
 			</button>	
 		{:else}
-			<button class="bx-button small function bx-disabled" on:click={count}>
+			<button class="btn variant-filled-primary bx-disabled" on:click={count}>
 				Run
 			</button>
-			<button class="bx-button small function bx-disabled" on:click={clear}>
+			<button class="btn variant-filled-primary bx-disabled" on:click={clear}>
 			Clear
 			</button>		
 		{/if}
-		<br>
+
 		<p class="errors"></p>
 		</div>
 		</div>
@@ -143,22 +143,22 @@ let textareaPlots ="";
 		<div class="boxOuter" id="results">
 		
 		<p class="dtm-para_green">Result</p>
-		<ul>
+		<ul class="p-4">
 			<li><b>Number of plots</b></li>
 		{#each result.plotProfiling.plotTypeCounters as item, i}
 		
-			<p class="resultList"><b>Number of {item.plotType}:</b> {item.number}</p>
+			<p class="resultList">Number of {item.plotType}: {item.number}</p>
 	
 		{/each}
-		<li><b>Joint Experiment 2020</b>	</li>
-			<p class="resultList"><b>Forest:</b> {#if result.plotProfiling.jointExperimentForest == true}
+		<li ><b>Joint Experiment 2020</b>	</li>
+			<p class="resultList">Forest: {#if result.plotProfiling.jointExperimentForest == true}
 				 yes
 			{:else}
 				 no
 			{/if}
 				
 			</p>
-			<p class="resultList"><b>Grassland:</b> {#if result.plotProfiling.jointExperimentGrld == true}
+			<p class="resultList">Grassland: {#if result.plotProfiling.jointExperimentGrld == true}
 				 yes
 			{:else}
 				 no
@@ -167,9 +167,9 @@ let textareaPlots ="";
 	
 		
 		<li><b>Further details</b></li>
-		<p class="resultList"><b>Number of entered plots:</b> {result.numberOfAllPlots}</p>
-		<p class="resultList"><b>Number of duplicate plots:</b> {result.numberOfDuplicates}</p>
-		<p class="resultList-overflow"><b>Non-valid plots: </b>
+		<p class="resultList">Number of entered plots: {result.numberOfAllPlots}</p>
+		<p class="resultList">Number of duplicate plots: {result.numberOfDuplicates}</p>
+		<p class="resultList-overflow">Non-valid plots:
 	
 		{#if result.notVaildPlotIds.length > 0}
 	
@@ -218,23 +218,7 @@ let textareaPlots ="";
 
 	}
 
-	.container
-	{
-		display: flex;
-		margin-left: 0;
-	}
 
-	.buttonList
-	{
-		padding-left: 20px;
-		margin-top: 60px;
-	}
-
-	.text
-	{
-		padding-left: 20px;
-		padding-right: 20px;
-	}
 
 	.boxLeft{
 	 
@@ -267,7 +251,8 @@ let textareaPlots ="";
 .dtm-para_green 
 {
     background-color: #bbddd9;
-    font-size: 14px;
+    font-size: 16px;
+	font-weight: bold;
     padding: 0.5em;
 	margin-block-start: 0;
 	border: 0;
