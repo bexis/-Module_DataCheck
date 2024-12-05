@@ -401,7 +401,6 @@
     <Content Include="Scripts\2013.2.611\telerik.window.min.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
-    <Content Include="Scripts\dpt_be.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="DPT_BE.Settings.json" />
